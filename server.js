@@ -15,6 +15,11 @@ app.use(cors());
 
 // import routes
 const workoutRoutes = require('./routes/workouts')
+const userRoutes = require('./routes/user')
+
+// Attach our Route to our app (express)
+app.use('/api/workouts', workoutRoutes)
+app.use('/api/user', userRoutes)
 
 // use json with express
 app.use(express.json());

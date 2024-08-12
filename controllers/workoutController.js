@@ -57,35 +57,33 @@ const deleteWorkout = async (req, res) => {
     }
 
     // if it successfully finds and deletes:
-    res.status(200).json(workout + ' successfully deleted');
+    res.status(200).json(workout);
 }
 
-// UPDATE Workout
+// Update Workout
 const updateWorkout = async (req,res) => {
     const {id} = req.params
 
-    // check if id is valid mongo object id
+    // check if the id is Mongo valid:
     if(!mongoose.Types.ObjectId.isValid(id)) {
-        return res.status(404).json({error: 'No such workout'});
+        return res.status(404).json({error: 'No such Workout'})
     }
 
-    // find a workout by its id
-    // if it finds it then
-    // spread out properties of the request
-    // edit/change what it receives
-    // - that comes from the request body
-    const workout = await Workout.findOneAndUpdate(
-        {_id: id}, 
-        {...req.body},
-        {new: true}
-    );
+    // find a workout by its id and if finds it
+    // spread out the properties of the req.body
+    // it will take whats in the req.body and update the workout
+    // with that information
+    const workout = await Workout.findOneAndUpdate({_id: id}, {
+        ...req.body
+    },
+    { new: true }) // new true make suers its returning the new update
 
     if(!workout) {
-        return res.status(404).json({error: 'No such workout'});
+        return res.status(404).json({error: 'No such Workout'})
     }
 
-    // Return the updated workout
     res.status(200).json(workout)
+
 }
 
 
